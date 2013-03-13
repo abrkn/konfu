@@ -27,9 +27,9 @@ configuration is read, in order, from:
 - `config.[NODE_ENV].json` and `.js` where `[NODE_ENV]` is `process.env NODE_ENV`. If `NODE_ENV` is not set, it defaults to `dev`
 - `config.travis.json`, if `process.env.TRAVIS`
 - `process.env` (lowercased, so that if you `export DB_URL="something"`, `konfu.db_url` is set)
-- `process.argv`, parsed with [optimist](https://github.com/substack/node-optimist), without `argv.$0` and `argv._`
+- `process.argv`, parsed with [optimist](https://github.com/substack/node-optimist)
 
-keep in mind that process.env can, depending on your system, contain a lot of weird stuff. name carefully!
+`process.env` and `process.argv` are only used to overwrite values already set from a `.js` or `.json` file
 
 license
 ---

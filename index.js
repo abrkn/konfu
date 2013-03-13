@@ -1,27 +1,31 @@
 var path = require('path')
 , fs = require('fs')
 , argv = require('optimist').argv
-delete argv.$0
-delete argv._
 
-module.exports = {}
+var konfu = module.exports = {}
 
-function extend(a, b) {
-	Object.keys(b).forEach(function(k) {
-		a[k] = b[k]
+function extend(source, overwriteOnly) {
+	Object.keys(source).forEach(function(key) {
+		if (overwriteOnly && !konfu.hasOwnProperty(key)) return
+		konfu[key] = source[key]
 	})
 }
 
 function extendFromFileIfExists(fn) {
+	//console.log(fn)
 	if (!fs.existsSync(fn)) return
-	extend(module.exports, require(fn))
+	extend(require(fn))
 }
 
-var files = [
-	'config.json',
-	'config.js',
-	'config.' + (process.env.NODE_ENV || 'dev') + '.js',
-	'config.' + (process.env.NODE_ENV || 'dev') + '.json',
+var env = process.env.NODE_ENV || 'dev'
+, files = [
+    'config.json',
+    'config.js',
+    'config',
+    'config.' + env + '.js',
+    'config.' + env + '.json',
+    'config/' + env + '.js',
+    'config/' + env + '.json',
 ]
 
 if (process.env.TRAVIS) {
@@ -32,8 +36,10 @@ if (process.env.TRAVIS) {
 files.map(path.join.bind(path, process.cwd()))
 .forEach(extendFromFileIfExists)
 
-Object.keys(process.env).forEach(function(k) {
-	module.exports[k.toLowerCase()] = process.env[k]
+Object.keys(process.env).forEach(function(key) {
+	var keyLower = key.toLowerCase()
+	if (!konfu.hasOwnProperty(keyLower)) return
+	konfu[keyLower] = process.env[key]
 })
 
-extend(module.exports, argv)
+extend(argv, true)

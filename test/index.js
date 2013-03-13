@@ -1,22 +1,28 @@
 var expect = require('expect.js')
-, path = require('path')
+, fs = require('fs')
 
 describe('konfu', function() {
-	afterEach(function() {
-		delete require.cache[path.join(__dirname, '../index.js')]
-	})
+	it('does not suck', function() {
+		process.env.CANT_TOUCH_THIS = 1
+		process.env.DB_URL = 'databass'
+		process.env.ARGH = 'cannot see this'
+		process.argv[2] = '--argh'
+		process.argv[3] = 'ument'
+		process.argv[4] = '--invi'
+		process.argv[5] = '0'
 
-	it('lowercases process.env', function() {
-		process.env.SOME_SETTING = 'testing'
-		var konfu = require('..')
-		expect(konfu.some_setting).to.be('testing')
-		delete process.env.SOME_SETTING
-	})
+		process.cwd = function() {
+			return __dirname
+		}
 
-	it('includes args', function() {
-		delete require.cache[path.join(__dirname, '../node_modules/optimist/index.js')]
-		process.argv[2] = '--key1=value1'
 		var konfu = require('..')
-		expect(konfu.key1).to.be('value1')
+
+		expect(konfu).to.eql({
+			db_url: 'databass',
+			you_can: 'see me',
+			also: 123,
+			argh: 'ument',
+			CASING: false
+		})
 	})
 })
