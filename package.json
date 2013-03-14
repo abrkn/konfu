@@ -1,7 +1,7 @@
 {
 	"name": "konfu",
 	"description": "config from files, env vars, args",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"main": "./index.js",
 	"scripts": {
 		"test": "mocha"
@@ -19,7 +19,7 @@
 	"author": "Andreas Brekken <a@abrkn.com>",
 	"license": "MIT",
 	"engine": {
-		"node": ">=0.6",
+		"node": ">=0.8",
 		"npm": ">=1.1"
 	}
 }
