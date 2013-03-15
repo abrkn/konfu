@@ -12,7 +12,6 @@ function extend(source, overwriteOnly) {
 }
 
 function extendFromFileIfExists(fn) {
-	//console.log(fn)
 	if (!fs.existsSync(fn)) return
 	extend(require(fn))
 }
@@ -21,7 +20,7 @@ var env = process.env.NODE_ENV || 'dev'
 , files = [
     'config.json',
     'config.js',
-    'config',
+    'config/index.js',
     'config.' + env + '.js',
     'config.' + env + '.json',
     'config/' + env + '.js',
@@ -31,6 +30,8 @@ var env = process.env.NODE_ENV || 'dev'
 if (process.env.TRAVIS) {
 	files.push('config.travis.json')
 	files.push('config.travis.js')
+	files.push('config/travis.json')
+	files.push('config/travis.json')
 }
 
 files.map(path.join.bind(path, process.cwd()))
