@@ -34,7 +34,9 @@ if (process.env.TRAVIS) {
 	files.push('config/travis.json')
 }
 
-files.map(path.join.bind(path, process.cwd()))
+files.map(function(f) {
+    return path.join(process.cwd(), f)
+})
 .forEach(extendFromFileIfExists)
 
 Object.keys(process.env).forEach(function(key) {
