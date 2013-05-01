@@ -2,7 +2,6 @@
 	"name": "konfu",
 	"description": "config from files, env vars, args",
 	"version": "1.1.4",
-	"main": "./index.js",
 	"scripts": {
 		"test": "mocha"
 	},
