@@ -11,8 +11,10 @@ function extend(source, overwriteOnly) {
 	})
 }
 
+var exists = fs.existsSync || path.existsSync
+
 function extendFromFileIfExists(fn) {
-	if (!fs.existsSync(fn)) return
+	if (!exists(fn)) return
 	extend(require(fn))
 }
 
