@@ -43,8 +43,11 @@ files.map(function(f) {
 
 Object.keys(process.env).forEach(function(key) {
 	var keyLower = key.toLowerCase()
-	if (!konfu.hasOwnProperty(keyLower)) return
-	konfu[keyLower] = process.env[key]
+    var casedKey = Object.keys(konfu).filter(function(k) {
+        return k.toLowerCase() === keyLower
+    })[0]
+    if (!casedKey) return
+    konfu[casedKey] = process.env[key]
 })
 
 extend(argv, true)
