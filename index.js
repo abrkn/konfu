@@ -41,13 +41,15 @@ files.map(function(f) {
 })
 .forEach(extendFromFileIfExists)
 
-Object.keys(process.env).forEach(function(key) {
-	var keyLower = key.toLowerCase()
-    var casedKey = Object.keys(konfu).filter(function(k) {
-        return k.toLowerCase() === keyLower
-    })[0]
-    if (!casedKey) return
-    konfu[casedKey] = process.env[key]
-})
+if (process.env.KONFU) {
+    Object.keys(process.env).forEach(function(key) {
+        var keyLower = key.toLowerCase()
+        var casedKey = Object.keys(konfu).filter(function(k) {
+            return k.toLowerCase() === keyLower
+        })[0]
+        if (!casedKey) return
+        konfu[casedKey] = process.env[key]
+    })
+}
 
 extend(argv, true)

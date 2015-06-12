@@ -13,6 +13,9 @@ npm install konfu
 usage
 ---
 
+note that as of v1.2.0, the environment variable `KONFU` must be truthy
+for environment variables to override config from files.
+
 ```
 var config = require('konfu')
 database.connect(config.database_url)
